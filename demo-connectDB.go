@@ -16,11 +16,15 @@ func query(db *sql.DB) {
 		price      float64
 		instructor string
 	)
-	query := "SELECT * FROM onlinecourse WHERE id = ?"
-	if err := db.QueryRow(query, 1).Scan(&id, &coursename, &price, &instructor); err != nil {
-		log.Fatal(err)
+	for {
+		var inputID int
+		fmt.Scan(&inputID)
+		query := "SELECT * FROM onlinecourse WHERE id = ?"
+		if err := db.QueryRow(query, inputID).Scan(&id, &coursename, &price, &instructor); err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(id, coursename, price, instructor)
 	}
-	fmt.Println(id, coursename, price, instructor)
 }
 
 func main() {
